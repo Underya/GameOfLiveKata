@@ -2,17 +2,24 @@ namespace GameOfLiveKata;
 
 public class GameOfLive
 {
-    public Field GetField(Size size)
+    private readonly Field _field;
+
+    public GameOfLive(Field.FieldSize size)
     {
-        var objects = new object[size.size];
-
-        for (int i = 0; i < size.size; i++)
-            objects[i] = 0;
-                
-        return new Field(objects);
+        _field = new Field(size);
     }
-
-    public record Field(IEnumerable<object> fieds);
     
-    public record Size(int size);
+    public Field GetField =>
+        _field;
+
+    public void SetState(Field.FieldPosition position, CellState state) =>
+        _field.SetState(position, state);
+
+    public object GetState(Field.FieldPosition position) =>
+        _field.GetState(position);
+
+    public void Life()
+    {
+        SetState(new(2, 2), CellState.Dead);
+    }
 }
